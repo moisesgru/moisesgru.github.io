@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembreto App - Nunca mais esqueça de nada</title>
+    <style>
+        /* CSS Reset & General Styles */
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #64B5F6;
+            --text-color: #333;
+            --bg-color: #f4f7f9;
+            --card-bg: #ffffff;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logo .icon {
+            display: inline-block;
+            transform: rotate(-15deg);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        #hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 90vh;
+            padding-top: var(--header-height);
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill="%2364B5F6" fill-opacity="0.1"><rect x="0" y="0" width="50" height="50"/><rect x="50" y="50" width="50" height="50"/></g></svg>');
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        /* Features Section */
+        #features {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #777;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card.reveal {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+        
+        /* About Section */
+        #about {
+            padding: 80px 0;
+            background-color: var(--card-bg);
+            text-align: center;
+        }
+        
+        #about .container {
+            max-width: 800px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+            nav {
+                display: none; /* Simple approach for mobile */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <a href="#" class="logo"><span class="icon">🔔</span> Lembreto</a>
+            <nav>
+                <ul>
+                    <li><a href="#features">Recursos</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h1>Organize sua vida. Simplifique sua rotina.</h1>
+                <p>O Lembreto é o seu assistente pessoal inteligente para gerenciar tarefas, medicamentos e compromissos importantes. Nunca mais esqueça de nada!</p>
+                <a href="#" class="cta-button">Baixe o App Agora</a>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Tudo o que você precisa</h2>
+                <p class="section-subtitle">Recursos pensados para facilitar o seu dia a dia.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">📅</div>
+                        <h3>Lembretes Gerais</h3>
+                        <p>Crie lembretes para qualquer tarefa, com data, hora e opções de repetição. Perfeito para pagamentos, reuniões e tarefas diárias.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">💊</div>
+                        <h3>Controle de Medicação</h3>
+                        <p>Adicione tratamentos completos, definindo dose, intervalo e duração. O app gera todos os alarmes para você automaticamente.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🗓️</div>
+                        <h3>Visão de Calendário</h3>
+                        <p>Veja todos os seus lembretes e doses de medicamentos em uma visão de calendário clara e organizada. Planeje sua semana com facilidade.</p>
+                    </div>
+                     <div class="feature-card">
+                        <div class="icon">☁️</div>
+                        <h3>Backup na Nuvem</h3>
+                        <p>Com a versão PRO, salve seus dados com segurança no Google Drive. Troque de celular sem medo de perder suas informações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">Sobre o Lembreto</h2>
+                <p>O Lembreto foi criado para ser uma ferramenta simples, mas poderosa, ajudando pessoas a manterem suas rotinas organizadas e, principalmente, a cuidarem da sua saúde com lembretes de medicação precisos. Desenvolvido com foco na experiência do usuário, o app é intuitivo e direto ao ponto.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 Lembreto App. Todos os direitos reservados.</p>
+            <p>Desenvolvido por Moisés Telles. Contato para suporte: <a href="mailto:moisesgru@gmail.com">moisesgru@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                         const headerOffset = document.getElementById('main-header').offsetHeight;
+                         const elementPosition = targetElement.getBoundingClientRect().top;
+                         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Reveal feature cards on scroll
+            const featureCards = document.querySelectorAll('.feature-card');
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                featureCards.forEach(card => {
+                    const cardTop = card.getBoundingClientRect().top;
+                    if (cardTop < windowHeight - 100) { // reveal when 100px from bottom
+                        card.classList.add('reveal');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Check on initial load
+        });
+    </script>
+
+</body>
+</html>
