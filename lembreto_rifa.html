@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembreto App - Concorra a uma Chaleira Elétrica!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2196F3; /* Azul do seu app */
+            --secondary-color: #FF9800; /* Laranja/Âmbar do seu app */
+            --dark-bg: #1A1C20;
+            --light-text: #ffffff;
+            --dark-text: #333333;
+            --success-color: #4CAF50;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: var(--dark-text);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-text);
+            text-decoration: none;
+        }
+
+        .navbar nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar nav ul li {
+            margin-left: 20px;
+        }
+
+        .navbar nav ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .navbar nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Seção Hero (Principal) */
+        .hero {
+            background: linear-gradient(rgba(33, 150, 243, 0.9), rgba(33, 150, 243, 0.8)), url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+            color: var(--light-text);
+            text-align: center;
+            padding: 150px 0 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .premio-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .premio-imagem {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+            border: 3px solid var(--light-text);
+        }
+
+        .cta-buttons {
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--dark-text);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary:hover {
+            background-color: #ffab40;
+        }
+
+        /* Seções Gerais */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .section-dark {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+        }
+
+        /* Seção 'Como Participar' */
+        .passos {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .passo {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .passo-numero {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .passo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Seção da Rifa */
+        #rifa h3 {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        #rifa p {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: -30px;
+            margin-bottom: 40px;
+        }
+        .rifa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .numero-rifa {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .numero-rifa.disponivel {
+            background-color: var(--success-color);
+        }
+        .numero-rifa.disponivel:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: glow 1.5s infinite alternate;
+        }
+        .numero-rifa.ocupado {
+            background-color: #757575; /* Cinza */
+            cursor: help;
+        }
+
+        @keyframes glow {
+          from {
+            box-shadow: 0 0 5px -5px #4CAF50;
+          }
+          to {
+            box-shadow: 0 0 5px 5px #4CAF50;
+          }
+        }
+
+        /* Tooltip para participantes */
+        .tooltip {
+            visibility: hidden;
+            width: 160px;
+            background-color: var(--dark-bg);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-bg) transparent transparent transparent;
+        }
+        .numero-rifa.ocupado:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Seção 'Sobre o App' */
+        .features {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 20px auto 0;
+        }
+        .features li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .check-icon {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-weight: 700;
+        }
+
+        /* Rodapé */
+        .footer {
+            background-color: #333;
+            color: var(--light-text);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Responsividade para Telas Menores */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .passos {
+                flex-direction: column;
+            }
+            .navbar .container {
+                flex-direction: column;
+            }
+            .navbar nav ul {
+                margin-top: 10px;
+            }
+            .btn {
+                display: block;
+                margin: 10px auto;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Lembreto App</a>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#rifa">Sorteio</a></li>
+                    <li><a href="#como-participar">Como Participar</a></li>
+                    <li><a href="#o-app">Sobre o App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container">
+                <div class="premio-container">
+                    <h2>O Prêmio: Chaleira Elétrica!</h2>
+                    <img src="foto.png" alt="Prêmio da Rifa - Chaleira Elétrica" class="premio-imagem">
+                </div>
+                <h1>Use o App Lembreto e Concorra!</h1>
+                <p class="subtitle">Cadastre-se e use o app para ganhar um número e participar do sorteio.</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=dev.moisestelles.lembreto" target="_blank" class="btn btn-primary">Baixar na Google Play</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="rifa" class="section">
+            <div class="container">
+                <h2>Tabela da Rifa</h2>
+                <h3><span id="numeros-restantes">100</span> números restantes!</h3>
+                <p>O sorteio será realizado assim que todos os números forem preenchidos.</p>
+                <div class="rifa-grid">
+                    <div class="numero-rifa disponivel">1</div>
+                    <div class="numero-rifa disponivel">2</div>
+					<!-- <div class="numero-rifa ocupado" data-participante="Moisés Telles">2</div> -->
+                    <div class="numero-rifa disponivel">3</div>
+                    <div class="numero-rifa disponivel">4</div>
+                    <div class="numero-rifa disponivel">5</div>
+					<!--<div class="numero-rifa ocupado" data-participante="Ana Silva">5</div> -->
+                    <div class="numero-rifa disponivel">6</div>
+                    <div class="numero-rifa disponivel">7</div>
+                    <div class="numero-rifa disponivel">8</div>
+                    <div class="numero-rifa disponivel">9</div>
+                    <div class="numero-rifa disponivel">10</div>
+                    <div class="numero-rifa disponivel">11</div>
+                    <div class="numero-rifa disponivel">12</div>
+                    <div class="numero-rifa disponivel">13</div>
+                    <div class="numero-rifa disponivel">14</div>
+                    <div class="numero-rifa disponivel">15</div>
+                    <div class="numero-rifa disponivel">16</div>
+                    <div class="numero-rifa disponivel">17</div>
+                    <div class="numero-rifa disponivel">18</div>
+                    <div class="numero-rifa disponivel">19</div>
+                    <div class="numero-rifa disponivel">20</div>
+                    <div class="numero-rifa disponivel">21</div>
+                    <div class="numero-rifa disponivel">22</div>
+                    <div class="numero-rifa disponivel">23</div>
+                    <div class="numero-rifa disponivel">24</div>
+                    <div class="numero-rifa disponivel">25</div>
+                    <div class="numero-rifa disponivel">26</div>
+                    <div class="numero-rifa disponivel">27</div>
+                    <div class="numero-rifa disponivel">28</div>
+                    <div class="numero-rifa disponivel">29</div>
+                    <div class="numero-rifa disponivel">30</div>
+                    <div class="numero-rifa disponivel">31</div>
+                    <div class="numero-rifa disponivel">32</div>
+                    <div class="numero-rifa disponivel">33</div>
+                    <div class="numero-rifa disponivel">34</div>
+                    <div class="numero-rifa disponivel">35</div>
+                    <div class="numero-rifa disponivel">36</div>
+                    <div class="numero-rifa disponivel">37</div>
+                    <div class="numero-rifa disponivel">38</div>
+                    <div class="numero-rifa disponivel">39</div>
+                    <div class="numero-rifa disponivel">40</div>
+                    <div class="numero-rifa disponivel">41</div>
+                    <div class="numero-rifa disponivel">42</div>
+                    <div class="numero-rifa disponivel">43</div>
+                    <div class="numero-rifa disponivel">44</div>
+                    <div class="numero-rifa disponivel">45</div>
+                    <div class="numero-rifa disponivel">46</div>
+                    <div class="numero-rifa disponivel">47</div>
+                    <div class="numero-rifa disponivel">48</div>
+                    <div class="numero-rifa disponivel">49</div>
+                    <div class="numero-rifa disponivel">50</div>
+                    <div class="numero-rifa disponivel">51</div>
+                    <div class="numero-rifa disponivel">52</div>
+                    <div class="numero-rifa disponivel">53</div>
+                    <div class="numero-rifa disponivel">54</div>
+                    <div class="numero-rifa disponivel">55</div>
+                    <div class="numero-rifa disponivel">56</div>
+                    <div class="numero-rifa disponivel">57</div>
+                    <div class="numero-rifa disponivel">58</div>
+                    <div class="numero-rifa disponivel">59</div>
+                    <div class="numero-rifa disponivel">60</div>
+                    <div class="numero-rifa disponivel">61</div>
+                    <div class="numero-rifa disponivel">62</div>
+                    <div class="numero-rifa disponivel">63</div>
+                    <div class="numero-rifa disponivel">64</div>
+                    <div class="numero-rifa disponivel">65</div>
+                    <div class="numero-rifa disponivel">66</div>
+                    <div class="numero-rifa disponivel">67</div>
+                    <div class="numero-rifa disponivel">68</div>
+                    <div class="numero-rifa disponivel">69</div>
+                    <div class="numero-rifa disponivel">70</div>
+                    <div class="numero-rifa disponivel">71</div>
+                    <div class="numero-rifa disponivel">72</div>
+                    <div class="numero-rifa disponivel">73</div>
+                    <div class="numero-rifa disponivel">74</div>
+                    <div class="numero-rifa disponivel">75</div>
+                    <div class="numero-rifa disponivel">76</div>
+                    <div class="numero-rifa disponivel">77</div>
+                    <div class="numero-rifa disponivel">78</div>
+                    <div class="numero-rifa disponivel">79</div>
+                    <div class="numero-rifa disponivel">80</div>
+                    <div class="numero-rifa disponivel">81</div>
+                    <div class="numero-rifa disponivel">82</div>
+                    <div class="numero-rifa disponivel">83</div>
+                    <div class="numero-rifa disponivel">84</div>
+                    <div class="numero-rifa disponivel">85</div>
+                    <div class="numero-rifa disponivel">86</div>
+                    <div class="numero-rifa disponivel">87</div>
+                    <div class="numero-rifa disponivel">88</div>
+                    <div class="numero-rifa disponivel">89</div>
+                    <div class="numero-rifa disponivel">90</div>
+                    <div class="numero-rifa disponivel">91</div>
+                    <div class="numero-rifa disponivel">92</div>
+                    <div class="numero-rifa disponivel">93</div>
+                    <div class="numero-rifa disponivel">94</div>
+                    <div class="numero-rifa disponivel">95</div>
+                    <div class="numero-rifa disponivel">96</div>
+                    <div class="numero-rifa disponivel">97</div>
+                    <div class="numero-rifa disponivel">98</div>
+                    <div class="numero-rifa disponivel">99</div>
+                    <div class="numero-rifa disponivel">100</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="como-participar" class="section section-dark">
+            <div class="container">
+                <h2>Como Participar? É Simples!</h2>
+                <div class="passos">
+                    <div class="passo">
+                        <div class="passo-numero">1</div>
+                        <h3>Baixe e Cadastre-se</h3>
+                        <p>Faça o download do Lembreto e crie sua conta gratuitamente. É rápido e fácil!</p>
+                    </div>
+                    <div class="passo">
+                        <div class="passo-numero">2</div>
+                        <h3>Aguarde seu Número</h3>
+                        <p>Eu, o desenvolvedor, verificarei os novos cadastros e adicionarei seu nome a um número vago na tabela acima.</p>
+                    </div>
+                    <div class="passo">
+                        <div class="passo-numero">3</div>
+                        <h3>Confira a Tabela e Torça!</h3>
+                        <p>Volte a esta página para ver qual número você recebeu e acompanhe o preenchimento. Boa sorte!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="o-app" class="section">
+            <div class="container">
+                <h2>Organize sua Vida com o Lembreto</h2>
+                <p>O Lembreto é o seu assistente pessoal para nunca mais esquecer de nada. Gerencie lembretes, contas a pagar, tratamentos de medicação e muito mais.</p>
+                <ul class="features">
+                    <li><span class="check-icon">✓</span> Lembretes personalizáveis e recorrentes.</li>
+                    <li><span class="check-icon">✓</span> Controle financeiro de contas a pagar.</li>
+                    <li><span class="check-icon">✓</span> Gestão completa de tratamentos de medicação.</li>
+                    <li><span class="check-icon">✓</span> Backup seguro dos seus dados na nuvem.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Lembreto App. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efeito de transição do Navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(33, 150, 243, 0.9)';
+            } else {
+                navbar.style.backgroundColor = 'var(--primary-color)';
+            }
+        });
+
+        // Lógica da Rifa (Contador e Tooltips)
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.querySelector('.rifa-grid');
+            const numerosOcupados = grid.querySelectorAll('.numero-rifa.ocupado');
+            const numerosDisponiveis = 100 - numerosOcupados.length;
+
+            // Atualiza o contador de números
+            document.getElementById('numeros-restantes').textContent = numerosDisponiveis;
+
+            // Adiciona o tooltip para cada número ocupado
+            numerosOcupados.forEach(numero => {
+                const participante = numero.getAttribute('data-participante');
+                if (participante) {
+                    const tooltip = document.createElement('span');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = participante;
+                    numero.appendChild(tooltip);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
