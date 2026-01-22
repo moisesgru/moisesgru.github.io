@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oração | Igreja Conectada</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-72 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col z-20">
+        <div class="p-6 border-b border-slate-200">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-white text-lg shadow-lg shadow-blue-900/20"><i class="fa-solid fa-church text-blue-400"></i></div>
+                <div><h1 class="font-bold text-slate-800 leading-tight">Igreja<br>Conectada</h1><span class="text-xs text-slate-500 font-bold uppercase tracking-wider">Master Doc v3.1</span></div>
+            </div>
+        </div>
+        <nav class="flex-1 py-4 overflow-y-auto space-y-1">
+            <p class="px-6 text-xs font-bold text-slate-400 uppercase mt-4 mb-2">Principal</p>
+            <a href="IgrejaConectada.html.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-building-columns w-6 text-center text-sm"></i> Institucional</a>
+            <a href="tour.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-laptop-code w-6 text-center text-sm"></i> Tour Interativo</a>
+            <p class="px-6 text-xs font-bold text-slate-400 uppercase mt-6 mb-2">Técnico</p>
+            <a href="core-gatekeeper.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-microchip w-6 text-center text-sm"></i> Core & Gatekeeper</a>
+            <a href="financeiro.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-hand-holding-dollar w-6 text-center text-sm"></i> Financeiro (v2.1)</a>
+            <a href="diaconia.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-users w-6 text-center text-sm"></i> Visitantes (v3.0)</a>
+            <a href="oracao.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors nav-active"><i class="fa-solid fa-hands-praying w-6 text-center text-sm"></i> Oração (v1.0)</a>
+            <p class="px-6 text-xs font-bold text-slate-400 uppercase mt-6 mb-2">Visual</p>
+            <a href="design-system.html" class="block w-full text-left px-6 py-3 hover:bg-slate-100 text-slate-600 font-medium transition-colors"><i class="fa-solid fa-palette w-6 text-center text-sm"></i> Design System</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">Igreja Conectada</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        <div id="mobile-menu" class="fixed inset-0 bg-slate-900 z-40 hidden flex-col p-6 text-white"><div class="flex justify-end mb-6"><button onclick="toggleMobileMenu()"><i class="fa-solid fa-xmark text-2xl"></i></button></div><div class="space-y-4"><a href="IgrejaConectada.html.html" class="block">Institucional</a><a href="oracao.html" class="block text-blue-400 font-bold">Docs: Oração</a></div></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-orange-500 font-bold tracking-widest text-xs uppercase">Especificação v1.0</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">4. Módulo de Oração & Intercessão</h2>
+                <p class="text-slate-600 mb-6">Fluxo de privacidade e engajamento via Push Notification.</p>
+                
+                <div class="mermaid">
+sequenceDiagram
+    participant Membro
+    participant App
+    participant Gatekeeper as Gatekeeper (Backend)
+    participant Intercessores as Grupo de Oração
+
+    Note over Membro, Intercessores: Fase 1: O Clamor
+    Membro->>App: Escreve Pedido e Define Privacidade
+    App->>Gatekeeper: POST /prayers (Status: Pendente)
+    
+    rect rgb(240, 248, 255)
+        Note right of Gatekeeper: RN03: Filtro de Privacidade
+        alt Nível = "Intercessores"
+            Gatekeeper->>Intercessores: Push: "Novo Pedido de Oração"
+        else Nível = "Mural da Igreja"
+            Gatekeeper->>Gatekeeper: Aguarda Moderação
+        end
+    end
+
+    Note over Membro, Intercessores: Fase 2: O Toque Digital (Push)
+    Intercessores->>App: Clica no botão "Orei por você"
+    App->>Gatekeeper: Registra Interação (Cooldown 1h)
+    Gatekeeper-->>Membro: PUSH: "Alguém está orando por você agora!"
+                </div>
+
+                <div class="grid gap-6 mt-8">
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-orange-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN03 - Níveis de Sigilo (Válvula de Segurança)</h3>
+                        <ul class="mt-2 space-y-2 text-sm text-slate-600">
+                            <li><strong>Nível 1 (Pastoral):</strong> Apenas usuários com role `PASTOR` visualizam. Dados criptografados.</li>
+                            <li><strong>Nível 2 (Intercessores):</strong> Visível para o grupo de confiança (`ROLE_INTERCESSOR`).</li>
+                            <li><strong>Nível 3 (Público):</strong> Visível no Mural da Igreja após <strong>aprovação humana</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-purple-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN04 - Engajamento Ativo (Push Notification)</h3>
+                        <p class="text-sm text-slate-600 mt-2">Ao clicar em "Orei", o sistema dispara uma notificação imediata para o autor do pedido. Para evitar spam, o mesmo intercessor só pode notificar o mesmo pedido uma vez a cada 60 minutos.</p>
+                        <div class="mt-3 flex items-center gap-3 bg-purple-50 p-3 rounded-lg">
+                            <i class="fa-solid fa-bell text-purple-600"></i>
+                            <span class="text-xs font-mono text-purple-700">"Alguém está intercedendo por você neste momento."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

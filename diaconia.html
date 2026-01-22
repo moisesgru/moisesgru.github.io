@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diaconia | Igreja Conectada</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">Igreja Conectada</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-purple-600 font-bold tracking-widest text-xs uppercase">Especificação v3.0</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">3. Fluxo de Diaconia Real-time</h2>
+                
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100 mb-8">
+                    <h3 class="font-bold text-purple-900 mb-2">O Problema</h3>
+                    <p class="text-sm text-purple-800">Papéis com nomes de visitantes demoram a chegar ao púlpito ou se perdem.</p>
+                    <h3 class="font-bold text-purple-900 mt-4 mb-2">A Solução</h3>
+                    <p class="text-sm text-purple-800">O membro cadastra o visitante no app. Um tablet no púlpito escuta o banco de dados e exibe o nome instantaneamente.</p>
+                </div>
+
+                <div class="mermaid">
+sequenceDiagram
+    participant Membro
+    participant Firebase
+    participant Diaconia
+
+    Membro->>Firebase: Salva 'Mario da Silva'
+    Firebase-->>Diaconia: Push Real-time (onSnapshot)
+    Diaconia->>Diaconia: Tela Pisca com Novo Nome
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('diaconia');
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

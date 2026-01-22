@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro | Igreja Conectada</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">Igreja Conectada</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-green-600 font-bold tracking-widest text-xs uppercase">Especificação v2.2</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">2. Financeiro & Conciliação</h2>
+                <p class="text-slate-600 mb-6">Detalhamento do fluxo P2P e uso de TXID.</p>
+
+                <div class="mermaid">
+sequenceDiagram
+    participant Membro
+    participant App
+    participant BancoApp
+    participant Admin
+
+    Membro->>App: Digita R$ 100,00
+    App->>App: Gera TXID (CAR-1430)
+    App->>App: Cria Payload Pix (EMV)
+    App->>Membro: Exibe QR Code
+    Membro->>BancoApp: Paga no Banco
+    Membro->>App: Clica "Confirmar"
+    App->>Admin: Cria Registro {status: 'pendente'}
+    Admin->>Admin: Confere Extrato Bancário
+    Admin->>App: Baixa Manual {status: 'pago'}
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-2">A Lógica do TXID</h3>
+                        <p class="text-sm text-slate-600">Para permitir conciliação manual sem gateway, o App gera um código único que vai na descrição do Pix. Formato: <code class="bg-slate-100 text-xs px-1 rounded">NOME-HORA</code>.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-2">Estados da Doação</h3>
+                        <ul class="text-sm text-slate-600 list-disc pl-4 space-y-2">
+                            <li><strong>Declarado (Pendente):</strong> Membro disse que pagou.</li>
+                            <li><strong>Confirmado (Pago):</strong> Tesoureiro viu o dinheiro na conta e deu baixa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('financeiro');
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

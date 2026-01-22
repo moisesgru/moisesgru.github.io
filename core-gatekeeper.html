@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Tech | Igreja Conectada</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">Igreja Conectada</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-red-500 font-bold tracking-widest text-xs uppercase">Raio-X Técnico</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">1. Core & Gatekeeper (SaaS)</h2>
+                <p class="text-slate-600 mb-6">Regras de controle de acesso, monetização e "Modo Graça".</p>
+                
+                <div class="mermaid">
+flowchart LR
+    Start(("Abrir App")) --> Auth{"Usuário Logado?"}
+    Auth -- Não --> Login["Tela Login"]
+    Auth -- Sim --> Fetch["Busca Status Assinatura"]
+    
+    Fetch --> Check{"Status?"}
+    
+    Check -- ATIVO --> Home["Dashboard Completo"]
+    Check -- BLOQUEADO --> GraceMode{"Modo Graça"}
+    
+    GraceMode --> Feat1["Bíblia & Notas"]
+    GraceMode --> Feat2["Pedidos de Oração"]
+    
+    Feat2 --> WriteOnly["Envio com Sucesso"]
+    WriteOnly --> NotifyPastor["Notifica Pastor (Blur)"]
+    
+    GraceMode --x Fin["Financeiro (Bloqueado)"]
+    GraceMode --x Media["Mídia (Bloqueado)"]
+                </div>
+
+                <div class="grid gap-6 mt-8">
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN01 - O Gatekeeper Misericordioso (Modo Graça)</h3>
+                        <p class="text-sm text-slate-600 mt-2">Diferente de um bloqueio total (tela vermelha), o sistema adota um bloqueio parcial. Se <code class="bg-slate-100 px-1 rounded">subscriptions/{churchId}</code> retornar <strong>BLOCKED</strong>, o membro ainda acessa a <strong>Bíblia</strong> e envia <strong>Pedidos de Oração</strong>. Módulos administrativos (Financeiro, Agenda, Mídia) são desativados e exibem um alerta sugerindo contatar a liderança.</p>
+                        <div class="mt-4 bg-slate-50 p-3 rounded-lg text-xs font-mono text-slate-500">
+                            <strong>Objetivo:</strong> Usar a demanda espiritual do membro ("Preciso de oração") para gerar pressão positiva na liderança, sem punir a fé do usuário.
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN02 - Estratégia Anti-Taxa</h3>
+                        <p class="text-sm text-slate-600 mt-2">O App Nativo (Android/iOS) nunca exibe botões de compra ou preços para não infringir regras das lojas. Pagamentos de assinatura ocorrem exclusivamente via Web (PWA/Desktop).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('core');
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

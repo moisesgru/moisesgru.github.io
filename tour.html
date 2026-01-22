@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecossistema Igreja Conectada | Tour Completo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Animações */
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Estilos do Celular */
+        .phone-frame {
+            border: 12px solid #1e293b;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #1e293b;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 20;
+        }
+
+        /* Estilos da Carteirinha (Premium) */
+        .card-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+        }
+        .chip-gradient {
+            background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+        }
+        .texture-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Nav Buttons Active State */
+        .nav-btn.active {
+            background-color: #4f46e5; /* Indigo 600 */
+            color: white;
+            border-color: #4f46e5;
+        }
+        .nav-btn.active i {
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- HEADER SUPERIOR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-church text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-slate-900 text-lg leading-tight">Igreja Conectada</h1>
+                        <p class="text-xs text-slate-500 font-medium">Tour de Funcionalidades v2.0</p>
+                    </div>
+                </div>
+				<div class="hidden md:flex items-center gap-4">
+					<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wide">Sistema Online</span>
+					
+					<a href="IgrejaConectada.html" class="text-sm text-slate-500 hover:text-indigo-600 font-medium transition-colors">
+						Sair da Demo
+					</a>
+				</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGAÇÃO PRINCIPAL (ABAS) -->
+    <div class="bg-white border-b border-slate-200 shadow-sm overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex space-x-2 py-3" aria-label="Tabs">
+                <button onclick="switchTab('gatekeeper')" id="nav-gatekeeper" class="nav-btn active flex items-center px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-shield-halved mr-2 text-indigo-500"></i> Gatekeeper (SaaS)
+                </button>
+                
+                <button onclick="switchTab('app')" id="nav-app" class="nav-btn flex items-center px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-mobile-screen mr-2 text-blue-500"></i> App do Membro
+                </button>
+
+                <!-- ABA EXCLUSIVA DA CARTEIRINHA -->
+                <button onclick="switchTab('card-generator')" id="nav-card-generator" class="nav-btn flex items-center px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:bg-slate-50 transition-colors bg-indigo-50 border border-indigo-100">
+                    <i class="fa-solid fa-id-card mr-2 text-purple-600"></i> Carteirinha Digital
+                </button>
+
+                <button onclick="switchTab('finance')" id="nav-finance" class="nav-btn flex items-center px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-chart-pie mr-2 text-green-500"></i> Zero Tax & Pix
+                </button>
+
+                <button onclick="switchTab('ops')" id="nav-ops" class="nav-btn flex items-center px-4 py-2 text-sm font-medium rounded-md text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-clipboard-check mr-2 text-orange-500"></i> Diaconia Real-time
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+
+        <!-- 1. GATEKEEPER TAB -->
+        <div id="tab-gatekeeper" class="tab-content fade-in block">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 bg-indigo-100 rounded-xl text-indigo-600">
+                                <i class="fa-solid fa-sliders text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Controle Total (Gatekeeper)</h3>
+                        </div>
+                        <p class="text-slate-600 mb-8">
+                            O sistema permite ativar ou desativar módulos em tempo real. Se a igreja passar por dificuldades financeiras, o "Modo Graça" mantém o essencial (Bíblia/Oração) gratuito para sempre.
+                        </p>
+                        
+                        <!-- Toggle Switch Realista -->
+                        <div class="flex items-center justify-between p-5 bg-slate-50 rounded-xl border border-slate-200">
+                            <div>
+                                <span class="block text-sm font-bold text-slate-800">Assinatura Premium</span>
+                                <span id="sub-status-text" class="text-xs font-bold uppercase text-green-600 bg-green-100 px-2 py-0.5 rounded mt-1 inline-block">Ativa</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="gatekeeper-toggle" class="sr-only peer" checked onchange="toggleGatekeeper()">
+                                <div class="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500"></div>
+                            </label>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 text-center">
+                            <i class="fa-solid fa-arrow-up mr-1"></i> Clique no switch acima para ver o efeito no App ao lado.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phone Simulator for Gatekeeper -->
+                <div class="flex justify-center">
+                    <div class="phone-frame w-[300px] h-[600px] relative transition-all duration-300 transform hover:scale-[1.02]">
+                        <div class="notch"></div>
+                        <!-- App Header -->
+                        <div class="bg-indigo-600 h-24 w-full absolute top-0 left-0 z-10 flex items-end p-4">
+                            <h2 class="text-white font-bold text-lg">Início</h2>
+                        </div>
+                        
+                        <!-- App Content -->
+                        <div class="mt-24 p-4 space-y-3 overflow-y-auto h-full pb-20 bg-slate-50">
+                            <div class="h-32 bg-white rounded-xl shadow-sm p-4 animate-pulse">
+                                <div class="h-4 bg-slate-200 rounded w-1/2 mb-2"></div>
+                                <div class="h-16 bg-slate-100 rounded"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="h-24 bg-blue-500 rounded-xl flex items-center justify-center text-white flex-col gap-2 shadow-lg shadow-blue-200">
+                                    <i class="fa-solid fa-book-bible text-2xl"></i>
+                                    <span class="text-xs font-bold">Bíblia</span>
+                                </div>
+                                <div class="h-24 bg-green-500 rounded-xl flex items-center justify-center text-white flex-col gap-2 shadow-lg shadow-green-200">
+                                    <i class="fa-solid fa-hand-holding-dollar text-2xl"></i>
+                                    <span class="text-xs font-bold">Ofertar</span>
+                                </div>
+                                <div class="h-24 bg-purple-500 rounded-xl flex items-center justify-center text-white flex-col gap-2 shadow-lg shadow-purple-200">
+                                    <i class="fa-solid fa-calendar-days text-2xl"></i>
+                                    <span class="text-xs font-bold">Agenda</span>
+                                </div>
+                                <div class="h-24 bg-orange-500 rounded-xl flex items-center justify-center text-white flex-col gap-2 shadow-lg shadow-orange-200">
+                                    <i class="fa-solid fa-video text-2xl"></i>
+                                    <span class="text-xs font-bold">Cultos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overlay de Bloqueio (Modo Graça) -->
+                        <div id="blocked-overlay" class="absolute inset-0 bg-slate-900/95 z-50 flex flex-col items-center justify-center text-white p-6 text-center transition-opacity duration-300 opacity-0 pointer-events-none">
+                            <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4 animate-bounce">
+                                <i class="fa-solid fa-shield-halved text-3xl"></i>
+                            </div>
+                            <h3 class="font-bold text-2xl mb-2">Modo Essencial</h3>
+                            <p class="text-sm text-slate-300 mb-6">Módulos financeiros e de mídia estão temporariamente suspensos.</p>
+                            <div class="flex gap-2 justify-center">
+                                <span class="text-xs font-bold bg-white/10 px-3 py-1 rounded-full border border-white/20">Bíblia: ON</span>
+                                <span class="text-xs font-bold bg-white/10 px-3 py-1 rounded-full border border-white/20">Oração: ON</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. APP DO MEMBRO TAB -->
+        <div id="tab-app" class="tab-content hidden fade-in">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Navegação no App</h3>
+                    <p class="text-slate-600 mb-6">Explore as telas principais que o membro acessa no dia a dia.</p>
+
+                    <button onclick="updatePhoneScreen('home')" class="w-full text-left p-4 bg-white border border-slate-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all shadow-sm flex items-center gap-4 group">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-house"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-slate-800">Dashboard</strong>
+                            <span class="text-sm text-slate-500">Versículo do dia e atalhos rápidos</span>
+                        </div>
+                    </button>
+
+                    <button onclick="updatePhoneScreen('notes')" class="w-full text-left p-4 bg-white border border-slate-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all shadow-sm flex items-center gap-4 group">
+                        <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center group-hover:bg-yellow-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-slate-800">Bloco de Notas</strong>
+                            <span class="text-sm text-slate-500">Anotações de pregação privadas</span>
+                        </div>
+                    </button>
+
+                    <button onclick="updatePhoneScreen('prayer')" class="w-full text-left p-4 bg-white border border-slate-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all shadow-sm flex items-center gap-4 group">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-hands-praying"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-slate-800">Pedidos de Oração</strong>
+                            <span class="text-sm text-slate-500">Mural comunitário e intercessão</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="flex justify-center">
+                    <div class="phone-frame w-[300px] h-[600px] bg-slate-50 relative flex flex-col">
+                        <div class="notch"></div>
+                        
+                        <!-- Header do App -->
+                        <div class="pt-10 pb-4 px-5 bg-white shadow-sm flex items-center justify-between z-10">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs">
+                                    <i class="fa-solid fa-church"></i>
+                                </div>
+                                <h5 class="text-xs font-bold text-slate-800 leading-tight">Igreja Batista<br>Renovada</h5>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" class="w-full h-full">
+                            </div>
+                        </div>
+
+                        <!-- Conteúdo Dinâmico do App -->
+                        <div id="phone-content" class="flex-1 overflow-y-auto p-4 space-y-4 relative scrollbar-hide">
+                            <!-- Conteúdo inicial (Home) será injetado via JS -->
+                        </div>
+
+                        <!-- Bottom Nav -->
+                        <div class="bg-white border-t border-slate-200 p-3 flex justify-around text-slate-400 text-xs z-10">
+                            <div class="flex flex-col items-center text-indigo-600"><i class="fa-solid fa-house text-lg mb-1"></i>Início</div>
+                            <div class="flex flex-col items-center hover:text-indigo-600"><i class="fa-solid fa-book-bible text-lg mb-1"></i>Bíblia</div>
+                            <div class="flex flex-col items-center hover:text-indigo-600"><i class="fa-solid fa-circle-play text-lg mb-1"></i>Mídia</div>
+                            <div class="flex flex-col items-center hover:text-indigo-600"><i class="fa-solid fa-bars text-lg mb-1"></i>Menu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. CARTEIRINHA DIGITAL (MENU EXCLUSIVO) -->
+        <div id="tab-card-generator" class="tab-content hidden fade-in">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                
+                <!-- Formulário -->
+                <div class="w-full md:w-1/2 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </span>
+                        Personalizar Carteirinha
+                    </h2>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Nome Completo</label>
+                            <input type="text" id="card-input-name" value="Ana Clara Silva" oninput="updateCard()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none transition-all">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Cargo / Função</label>
+                                <select id="card-input-role" onchange="updateCard()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
+                                    <option value="MEMBRO">Membro</option>
+                                    <option value="VOLUNTÁRIO">Voluntário</option>
+                                    <option value="LÍDER DE CÉLULA">Líder</option>
+                                    <option value="DIÁCONO">Diácono</option>
+                                    <option value="PASTOR(A)">Pastor(a)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Membro Desde</label>
+                                <input type="text" id="card-input-since" value="2023" oninput="updateCard()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Matrícula</label>
+                                <input type="text" id="card-input-id" value="004.289.11" oninput="updateCard()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Tipo Sanguíneo</label>
+                                <input type="text" id="card-input-blood" value="O+" oninput="updateCard()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="pt-4 p-4 bg-purple-50 rounded-xl border border-purple-100 text-sm text-purple-800">
+                            <i class="fa-solid fa-circle-info mr-2"></i>
+                            Esta carteirinha é gerada dinamicamente no App do membro e também pode ser impressa em PVC na secretaria.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Visual -->
+                <div class="w-full md:w-1/2 flex flex-col items-center justify-center min-h-[500px] bg-slate-100 rounded-2xl border border-slate-200 relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-8 relative z-10">Visualização em Tempo Real</h3>
+                    
+                    <!-- CARTÃO PREMIUM -->
+                    <div class="relative w-[380px] h-[240px] rounded-2xl shadow-2xl overflow-hidden card-bg transform hover:scale-105 transition-transform duration-500 group z-20">
+                        
+                        <!-- Textura -->
+                        <div class="absolute inset-0 texture-overlay opacity-30"></div>
+                        <div class="absolute -top-12 -right-12 w-48 h-48 bg-purple-500 rounded-full mix-blend-overlay opacity-30 blur-2xl group-hover:opacity-50 transition-opacity"></div>
+                        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-500 rounded-full mix-blend-overlay opacity-30 blur-2xl group-hover:opacity-50 transition-opacity"></div>
+
+                        <div class="relative h-full p-6 flex flex-col justify-between text-white font-sans z-30">
+                            
+                            <!-- Header Cartão -->
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 shadow-lg">
+                                        <div class="w-5 h-5 border-2 border-white rounded-full"></div>
+                                    </div>
+                                    <div>
+                                        <h1 class="text-xs font-bold tracking-[0.2em] uppercase opacity-90">Comunidade</h1>
+                                        <h2 class="text-[10px] tracking-[0.2em] uppercase opacity-60">Vida & Paz</h2>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span id="preview-role" class="text-[10px] font-bold bg-white/20 backdrop-blur-md px-3 py-1 rounded border border-white/10 shadow-sm tracking-wide">MEMBRO</span>
+                                </div>
+                            </div>
+
+                            <!-- Chip e NFC -->
+                            <div class="flex items-center gap-4 my-2 pl-1">
+                                <div class="w-12 h-9 rounded-lg border border-yellow-600/50 shadow-inner relative overflow-hidden chip-gradient opacity-90">
+                                    <div class="absolute inset-0 border border-black/10 rounded-lg"></div>
+                                    <div class="absolute top-1/2 left-0 right-0 h-[1px] bg-black/20"></div>
+                                    <div class="absolute left-1/3 top-0 bottom-0 w-[1px] bg-black/20"></div>
+                                    <div class="absolute right-1/3 top-0 bottom-0 w-[1px] bg-black/20"></div>
+                                </div>
+                                <i class="fa-solid fa-wifi rotate-90 text-white/30 text-2xl"></i>
+                            </div>
+
+                            <!-- Dados e QR -->
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-[9px] text-indigo-200 uppercase tracking-wider mb-1">Nome do Titular</p>
+                                    <p id="preview-name" class="font-bold text-xl tracking-wide text-white drop-shadow-md truncate max-w-[240px] uppercase font-mono">ANA CLARA SILVA</p>
+                                    
+                                    <div class="flex gap-5 mt-3 text-white/80">
+                                        <div>
+                                            <p class="text-[7px] text-indigo-300 uppercase">Desde</p>
+                                            <p id="preview-since" class="text-xs font-mono tracking-wide">2023</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[7px] text-indigo-300 uppercase">Matrícula</p>
+                                            <p id="preview-id" class="text-xs font-mono tracking-wide">004.289.11</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-1.5 rounded-lg shadow-lg">
+                                    <i class="fa-solid fa-qrcode text-slate-900 text-3xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-4">
+                        <button class="px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-600 text-sm hover:bg-slate-50 font-medium">
+                            <i class="fa-solid fa-download mr-2"></i> Baixar PNG
+                        </button>
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 font-medium shadow-md shadow-indigo-200">
+                            <i class="fa-solid fa-share-nodes mr-2"></i> Compartilhar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. FINANCEIRO TAB -->
+        <div id="tab-finance" class="tab-content hidden fade-in">
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 text-center">Transparência Financeira</h3>
+                    <div class="relative h-64 w-full">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-slate-400 mt-4">Gráfico gerado em tempo real com Chart.js</p>
+                </div>
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="text-green-500"><i class="fa-brands fa-pix"></i></span> Fluxo Zero Tax (Pix Direto)
+                    </h3>
+                    <p class="text-slate-600">
+                        Diferente de outras plataformas, nosso sistema gera o Pix direto na conta da igreja. 
+                        <strong>Sem intermediários, sem taxas percentuais.</strong>
+                    </p>
+
+                    <div class="relative pl-8 border-l-2 border-green-200 space-y-8 mt-6">
+                        <div class="relative">
+                            <div class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs font-bold">1</div>
+                            <h4 class="font-bold text-slate-800">Configuração</h4>
+                            <p class="text-sm text-slate-600">O tesoureiro cadastra a chave Pix (CNPJ/E-mail) no painel administrativo.</p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs font-bold">2</div>
+                            <h4 class="font-bold text-slate-800">Geração Local</h4>
+                            <p class="text-sm text-slate-600">
+                                O App gera o código "BR Code" instantaneamente com um identificador único (TXID).
+                            </p>
+                            <div class="mt-2 bg-green-50 p-3 rounded border border-green-100 font-mono text-xs text-green-700">
+                                TXID: MEMBRO-104-16987723
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. DIACONIA TAB -->
+        <div id="tab-ops" class="tab-content hidden fade-in">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- COLUNA ESQUERDA: INPUTS DE SIMULAÇÃO -->
+                <div class="space-y-6">
+                    <!-- Bloco 1: Check-in -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus text-orange-500"></i> Simular Check-in
+                        </h3>
+                        <div class="space-y-3">
+                            <input type="text" id="visitor-name" class="w-full p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="Nome do Visitante">
+                            <input type="text" id="inviter-name" class="w-full p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 outline-none" placeholder="Convidado Por (Opcional)">
+                            <button onclick="addVisitor()" class="w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-transform active:scale-95 shadow-lg shadow-orange-200">
+                                Enviar Visitante
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bloco 2: Oração (NOVO) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-hands-praying text-purple-600"></i> Simular Pedido de Oração
+                        </h3>
+                        <div class="space-y-3">
+                            <input type="text" id="prayer-author" class="w-full p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Nome do Irmão(ã)">
+                            <select id="prayer-type" class="w-full p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 outline-none bg-white">
+                                <option value="Saúde">Saúde</option>
+                                <option value="Família">Família</option>
+                                <option value="Emprego">Emprego</option>
+                                <option value="Espiritual">Causa Espiritual</option>
+                            </select>
+                            <button onclick="addPrayer()" class="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-transform active:scale-95 shadow-lg shadow-purple-200">
+                                Enviar Pedido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- COLUNA DIREITA: DASHBOARD UNIFICADO -->
+                <div class="bg-slate-900 text-white p-8 rounded-2xl shadow-2xl min-h-[500px] relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-overlay opacity-10 blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-orange-500 rounded-full mix-blend-overlay opacity-10 blur-3xl"></div>
+                    
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4 relative z-10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-xs font-bold text-green-400 tracking-wider">AO VIVO</span>
+                        </div>
+                        <h3 class="font-bold text-slate-200">Painel Ministerial Unificado</h3>
+                    </div>
+                    
+                    <!-- Feed de Atividades -->
+                    <div id="dashboard-feed" class="space-y-3 relative z-10 overflow-y-auto max-h-[400px] pr-2 scrollbar-thin scrollbar-thumb-slate-700">
+                        
+                        <!-- Item Exemplo: Oração -->
+                        <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-purple-500 flex justify-between items-center animate-pulse">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <i class="fa-solid fa-hands-praying text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Maria Souza</h4>
+                                    <p class="text-xs text-purple-300">Pedido: Saúde (Cirurgia)</p>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">19:12</span>
+                        </div>
+
+                        <!-- Item Exemplo: Visitante -->
+                        <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-orange-500 flex justify-between items-center animate-pulse">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400">
+                                    <i class="fa-solid fa-user text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Carlos Silva</h4>
+                                    <p class="text-xs text-orange-300">1ª Vez - Conv: Pr. João</p>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">19:05</span>
+                        </div>
+                    </div>
+                    
+                    <p class="absolute bottom-4 left-0 w-full text-center text-slate-600 text-[10px] italic">
+                        Notificações em tempo real para diáconos e pastores.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS INTEGRADOS -->
+    <script>
+        // --- 1. LÓGICA DE ABAS ---
+        function switchTab(tabId) {
+            // Esconde todas as abas
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Remove 'active' de todos os botões
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('active', 'bg-slate-100');
+                // Remove estilos específicos da aba ativa
+                if(el.id === 'nav-gatekeeper') el.querySelector('i').classList.remove('text-white');
+                // (Simplificação: usamos CSS .active para controlar cor do texto/icone)
+            });
+
+            // Mostra aba selecionada
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            
+            // Ativa botão
+            const activeBtn = document.getElementById('nav-' + tabId);
+            activeBtn.classList.add('active');
+
+            // Renderiza gráfico se for financeiro
+            if (tabId === 'finance') renderChart();
+            
+            // Inicia Home do App se for app
+            if (tabId === 'app') updatePhoneScreen('home');
+        }
+
+        // --- 2. GATEKEEPER ---
+        function toggleGatekeeper() {
+            const isChecked = document.getElementById('gatekeeper-toggle').checked;
+            const statusText = document.getElementById('sub-status-text');
+            const overlay = document.getElementById('blocked-overlay');
+
+            if (isChecked) {
+                statusText.innerText = "Ativa";
+                statusText.className = "text-xs font-bold uppercase text-green-600 bg-green-100 px-2 py-0.5 rounded mt-1 inline-block";
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                statusText.innerText = "Cancelada (Modo Graça)";
+                statusText.className = "text-xs font-bold uppercase text-red-600 bg-red-100 px-2 py-0.5 rounded mt-1 inline-block";
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        // --- 3. APP DO MEMBRO (Phone Simulator) ---
+        function updatePhoneScreen(screen) {
+            const content = document.getElementById('phone-content');
+            let html = '';
+
+            if (screen === 'home') {
+                html = `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-indigo-600 rounded-xl p-5 text-white shadow-lg shadow-indigo-200">
+                            <span class="text-xs bg-indigo-500 px-2 py-0.5 rounded mb-2 inline-block">Versículo do Dia</span>
+                            <p class="font-serif text-lg italic">"O Senhor é o meu pastor; de nada terei falta."</p>
+                            <p class="text-xs text-indigo-200 mt-2 text-right font-bold">- Salmos 23:1</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-calendar-check text-purple-500 text-xl"></i>
+                                <span class="text-xs font-bold text-slate-700">Agenda</span>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-hand-holding-heart text-green-500 text-xl"></i>
+                                <span class="text-xs font-bold text-slate-700">Dízimos</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-sm text-slate-800 mb-3">Últimas Notícias</h4>
+                            <div class="flex gap-3 items-center border-b border-slate-50 pb-2 mb-2">
+                                <div class="w-10 h-10 bg-slate-200 rounded-lg flex-shrink-0"></div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-700">Culto de Jovens</p>
+                                    <p class="text-[10px] text-slate-500">Sábado às 19h30</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-center">
+                                <div class="w-10 h-10 bg-slate-200 rounded-lg flex-shrink-0"></div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-700">Campanha do Quilo</p>
+                                    <p class="text-[10px] text-slate-500">Traga seu alimento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (screen === 'notes') {
+                html = `
+                    <div class="space-y-4 animate-fade-in">
+                        <h3 class="font-bold text-lg text-slate-800">Minhas Anotações</h3>
+                        <div class="bg-yellow-50 p-4 rounded-xl border border-yellow-100 relative">
+                            <span class="absolute top-2 right-2 text-yellow-400 text-xs">12/OUT</span>
+                            <h4 class="font-bold text-sm text-yellow-800 mb-1">A Importância da Fé</h4>
+                            <p class="text-xs text-yellow-700 leading-relaxed">O pastor falou sobre como a fé move montanhas, mas precisa de ação...</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 border-dashed flex items-center justify-center text-slate-400 gap-2 cursor-pointer">
+                            <i class="fa-solid fa-plus"></i> Nova Nota
+                        </div>
+                    </div>
+                `;
+            } else if (screen === 'prayer') {
+                html = `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-purple-600 text-white p-4 rounded-xl shadow-md">
+                            <h3 class="font-bold">Mural de Oração</h3>
+                            <p class="text-xs text-purple-200">Interceda pelos irmãos</p>
+                        </div>
+                        
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-bold text-slate-700">Maria Souza</span>
+                                <span class="text-[10px] text-slate-400">Há 2h</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">Pela saúde do meu pai que fará cirurgia.</p>
+                            <button class="w-full py-1.5 bg-purple-50 text-purple-600 rounded text-xs font-bold hover:bg-purple-100 transition-colors">
+                                <i class="fa-solid fa-hands-praying mr-1"></i> Orar Agora
+                            </button>
+                        </div>
+
+                         <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-bold text-slate-700">João Pedro</span>
+                                <span class="text-[10px] text-slate-400">Há 5h</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">Por uma porta de emprego.</p>
+                            <button class="w-full py-1.5 bg-purple-50 text-purple-600 rounded text-xs font-bold hover:bg-purple-100 transition-colors">
+                                <i class="fa-solid fa-hands-praying mr-1"></i> Orar Agora
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = html;
+        }
+
+        // --- 4. CARTEIRINHA DIGITAL ---
+        function updateCard() {
+            const name = document.getElementById('card-input-name').value;
+            const role = document.getElementById('card-input-role').value;
+            const since = document.getElementById('card-input-since').value;
+            const id = document.getElementById('card-input-id').value;
+            
+            // Update Preview
+            document.getElementById('preview-name').innerText = name || "NOME DO MEMBRO";
+            document.getElementById('preview-role').innerText = role;
+            document.getElementById('preview-since').innerText = since;
+            document.getElementById('preview-id').innerText = id;
+        }
+
+        // --- 5. FINANCEIRO CHART ---
+        let chartInstance = null;
+        function renderChart() {
+            const ctx = document.getElementById('costChart');
+            if(!ctx || chartInstance) return;
+
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['SaaS (Gatekeeper)', 'Taxas Gateway', 'Infraestrutura', 'Investimento Reino'],
+                    datasets: [{
+                        data: [5, 0, 15, 80],
+                        backgroundColor: ['#4f46e5', '#ef4444', '#f59e0b', '#10b981'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        // --- 6. DIACONIA (CHECK-IN E ORAÇÃO) ---
+        function addVisitor() {
+            const name = document.getElementById('visitor-name').value;
+            const inviter = document.getElementById('inviter-name').value;
+            const list = document.getElementById('dashboard-feed'); // Updated ID
+
+            if (!name) return alert('Digite o nome do visitante!');
+
+            const now = new Date();
+            const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            const item = document.createElement('div');
+            item.className = "bg-slate-800 p-4 rounded-xl border-l-4 border-orange-500 flex justify-between items-center animate-fade-in mb-3";
+            item.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400">
+                        <i class="fa-solid fa-user text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">${name}</h4>
+                        <p class="text-xs text-orange-300">${inviter ? 'Conv: ' + inviter : 'Visitante Espontâneo'}</p>
+                    </div>
+                </div>
+                <span class="text-xs bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">${time}</span>
+            `;
+
+            list.prepend(item);
+            
+            // Reset fields
+            document.getElementById('visitor-name').value = '';
+            document.getElementById('inviter-name').value = '';
+        }
+
+        function addPrayer() {
+            const name = document.getElementById('prayer-author').value;
+            const type = document.getElementById('prayer-type').value;
+            const list = document.getElementById('dashboard-feed');
+
+            if (!name) return alert('Digite quem está pedindo oração!');
+
+            const now = new Date();
+            const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            const item = document.createElement('div');
+            // Estilo Roxo para diferenciar
+            item.className = "bg-slate-800 p-4 rounded-xl border-l-4 border-purple-500 flex justify-between items-center animate-fade-in mb-3";
+            item.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                        <i class="fa-solid fa-hands-praying text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">${name}</h4>
+                        <p class="text-xs text-purple-300">Pedido: ${type}</p>
+                    </div>
+                </div>
+                <span class="text-xs bg-slate-950 px-2 py-1 rounded text-slate-400 font-mono">${time}</span>
+            `;
+
+            list.prepend(item);
+            
+            // Reset fields
+            document.getElementById('prayer-author').value = '';
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa na aba Gatekeeper ou App conforme preferência
+            // Se quiser iniciar no App: switchTab('app');
+        });
+    </script>
+</body>
+</html>

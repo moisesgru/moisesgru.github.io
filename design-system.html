@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System | Igreja Conectada</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">Igreja Conectada</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-8">Design System MVP</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-4">Cores Primárias</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-[#1E88E5] rounded-lg shadow-sm"></div>
+                                <div><p class="font-bold">Primary Blue</p><p class="text-xs text-slate-500">#1E88E5</p></div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-[#0F172A] rounded-lg shadow-sm"></div>
+                                <div><p class="font-bold">Dark Slate</p><p class="text-xs text-slate-500">#0F172A</p></div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-[#EF4444] rounded-lg shadow-sm"></div>
+                                <div><p class="font-bold">Alert Red</p><p class="text-xs text-slate-500">#EF4444</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-4">Tipografia & Botões</h3>
+                        <h1 class="text-2xl font-bold text-slate-900 mb-2">Heading 1 (Inter Bold)</h1>
+                        <p class="text-slate-600 mb-6">Paragraph text using Inter Regular. Clean, legible, and modern.</p>
+                        
+                        <div class="flex gap-2">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm">Primary</button>
+                            <button class="bg-white border border-slate-300 text-slate-600 px-4 py-2 rounded-lg font-bold text-sm">Secondary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="font-bold text-slate-800 mb-6">Conceito Visual: Visão Membro vs Admin</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-slate-100 p-4 rounded-xl text-center">
+                            <p class="font-bold text-slate-600 mb-2">Membro (Clean/White)</p>
+                            <div class="bg-white h-64 rounded-lg shadow-sm border border-slate-200 mx-auto w-3/4 flex items-center justify-center">
+                                <span class="text-slate-300">Interface Clara</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-xl text-center">
+                            <p class="font-bold text-slate-600 mb-2">Admin (Dark/Pro)</p>
+                            <div class="bg-slate-900 h-64 rounded-lg shadow-sm mx-auto w-3/4 flex items-center justify-center">
+                                <span class="text-slate-500">Interface Escura</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('design');
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
