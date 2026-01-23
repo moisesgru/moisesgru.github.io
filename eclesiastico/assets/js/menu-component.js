@@ -7,7 +7,7 @@ const menuItems = [
     {
         section: "Principal",
         items: [
-            { id: "institucional", label: "Institucional", icon: "fa-building-columns", link: "EClesiastico.html" },
+            { id: "institucional", label: "Institucional", icon: "fa-building-columns", link: "index.html" },
             { id: "tour", label: "Tour Interativo", icon: "fa-laptop-code", link: "tour.html" }
         ]
     },
@@ -101,4 +101,5 @@ function renderMobileMenu(activeId) {
     `;
 
     placeholder.outerHTML = mobileMenuHtml;
+
 }
