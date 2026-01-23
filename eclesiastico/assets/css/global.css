@@ -1,0 +1,71 @@
+/* assets/css/global.css */
+body { 
+    background-color: #f8fafc; 
+    color: #1e293b; 
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Navigation State */
+.nav-active {
+    background-color: #e2e8f0;
+    color: #1E88E5;
+    border-right: 4px solid #1E88E5;
+}
+
+/* Phone Frame CSS */
+.phone-frame {
+    border: 12px solid #1c1917;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 25px;
+    background-color: #1c1917;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    z-index: 20;
+}
+
+/* Gatekeeper Overlay & Animations */
+.gatekeeper-overlay { 
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; 
+}
+
+.hide-overlay { 
+    transform: translateY(-100%); 
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+.show-overlay { 
+    transform: translateY(0); 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+/* Mermaid Centering */
+.mermaid { 
+    display: flex; 
+    justify-content: center; 
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    border: 1px solid #E2E8F0; 
+    overflow-x: auto; 
+    margin-bottom: 20px; 
+}
