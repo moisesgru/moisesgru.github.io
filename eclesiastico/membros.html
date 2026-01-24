@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membros & Secretaria | E-Clesiástico</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">E-Clesiástico</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-rose-600 font-bold tracking-widest text-xs uppercase">Especificação v4.1</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">6. Gestão de Membros & Secretaria</h2>
+                <p class="text-slate-600 mb-6">Cadastro centralizado, histórico eclesiástico e o recurso de "Auto-Onboarding".</p>
+
+				<div class="mermaid">
+				flowchart LR
+					Start(("Novo Membro")) --> Origem{"Como chegou?"}
+					
+					Origem -- "Manual" --> Sec["Secretaria Digita"]
+					Origem -- "Digital" --> Link["Link Mágico (WhatsApp)"]
+					
+					Link --> FormAuto["Membro Preenche em Casa"]
+					
+					Sec --> Validation{"Validação"}
+					FormAuto --> Validation
+					
+					Validation --> DB[("Banco de Dados")]
+					
+					DB --> GenID
+					
+					subgraph AutoActions ["Ações Automáticas"]
+						GenID["Gera Carteirinha"]
+						GenUser["Cria Usuário App"]
+						GenQR["Gera QR Code Pix"]
+					end
+				</div>
+
+                <div class="grid gap-8 mt-12">
+                    
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-rose-100 rounded-lg text-rose-600"><i class="fa-solid fa-clipboard-user"></i></div>
+                            <h3 class="font-bold text-slate-800 text-lg">Cadastro Inteligente (RN06)</h3>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-4">
+                            Secretarias perdem muito tempo digitando fichas de papel. O E-Clesiástico introduz o <strong>"Link Mágico"</strong>.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                                <h4 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-keyboard mr-2"></i>Método Tradicional</h4>
+                                <p class="text-xs text-slate-500">O membro preenche papel, a secretária decifra a letra e digita tudo no sistema. Lento e propenso a erros.</p>
+                            </div>
+                            <div class="bg-rose-50 p-4 rounded-lg border border-rose-100 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-2 opacity-10 text-6xl text-rose-900"><i class="fa-brands fa-whatsapp"></i></div>
+                                <h4 class="font-bold text-rose-800 text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Método E-Clesiástico</h4>
+                                <p class="text-xs text-rose-700">A secretária envia um link no WhatsApp. O próprio membro preenche, tira a selfie e anexa documentos. Cai direto no sistema como "Pendente de Aprovação".</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-2xl">
+                        <div class="flex justify-between items-end mb-6 relative z-10">
+                            <div>
+                                <h3 class="text-xl font-bold">Ficha do Membro</h3>
+                                <p class="text-slate-400 text-sm">Visão do Administrador</p>
+                            </div>
+                            <button class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Salvar Ficha
+                            </button>
+                        </div>
+
+                        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 relative z-10 grid md:grid-cols-3 gap-6">
+                            
+                            <div class="col-span-1 flex flex-col items-center gap-4">
+                                <div class="w-32 h-32 rounded-full bg-slate-700 border-4 border-slate-600 flex items-center justify-center relative group cursor-pointer overflow-hidden">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <i class="fa-solid fa-camera"></i>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold border border-green-500/30">ATIVO</span>
+                                    <p class="text-xs text-slate-500 mt-2">ID: 004.289.11</p>
+                                </div>
+                            </div>
+
+                            <div class="col-span-2 space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs text-slate-400 uppercase font-bold block mb-1">Nome Completo</label>
+                                        <input type="text" value="Ana Clara Silva" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm focus:border-rose-500 outline-none text-slate-200">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400 uppercase font-bold block mb-1">Data Nascimento</label>
+                                        <input type="date" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm focus:border-rose-500 outline-none text-slate-200">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs text-slate-400 uppercase font-bold block mb-1">Cargo Eclesiástico</label>
+                                        <select class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm focus:border-rose-500 outline-none text-slate-200">
+                                            <option>Membro</option>
+                                            <option>Diácono</option>
+                                            <option>Líder de Louvor</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-slate-400 uppercase font-bold block mb-1">Estado Civil</label>
+                                        <select class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm focus:border-rose-500 outline-none text-slate-200">
+                                            <option>Casado(a)</option>
+                                            <option>Solteiro(a)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs text-slate-400 uppercase font-bold block mb-1">Observações Pastorais (Privado)</label>
+                                    <textarea class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm focus:border-rose-500 outline-none text-slate-200 h-20">Batizada em 2015. Veio da Igreja Presbiteriana. Líder do grupo de mulheres.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('membros'); 
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

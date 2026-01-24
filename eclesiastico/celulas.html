@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Células & Discipulado | E-Clesiástico</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">E-Clesiástico</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-amber-600 font-bold tracking-widest text-xs uppercase">Especificação v5.0</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">7. Células & Pequenos Grupos</h2>
+                <p class="text-slate-600 mb-6">Gestão descentralizada de reuniões nos lares, relatórios simplificados e "Chamada Digital".</p>
+
+                <div class="mermaid">
+                flowchart LR
+                    Leader["Líder de Célula"] --> App["App do Membro (Modo Líder)"]
+                    
+                    subgraph Reunião ["Fluxo da Reunião"]
+                        App --> Chamada["Realizar Chamada"]
+                        Chamada --> ListMembers["Lista de Integrantes"]
+                        ListMembers --> Check["Check de Presença"]
+                        Check --> Visitors["Cadastrar Visitante"]
+                        Visitors --> Report["Enviar Relatório"]
+                    end
+                    
+                    Report --> Dashboard["Painel do Supervisor"]
+                    Dashboard --> Metrics["Taxa de Frequência & Multiplicação"]
+                </div>
+
+                <div class="grid gap-8 mt-12">
+                    
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-amber-100 rounded-lg text-amber-600"><i class="fa-solid fa-house-chimney-user"></i></div>
+                            <h3 class="font-bold text-slate-800 text-lg">A Chamada em 3 Cliques</h3>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-4">
+                            Líderes de célula odeiam preencher formulários longos. O E-Clesiástico transforma o relatório em uma lista de presença estilo "iFood".
+                        </p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-slate-900 rounded-xl p-4 text-white relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-2 opacity-20 text-4xl"><i class="fa-solid fa-mobile-screen"></i></div>
+                                <h4 class="font-bold text-sm mb-3">No Celular do Líder</h4>
+                                <ul class="space-y-2 text-xs">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-regular fa-square-check text-green-400 text-lg"></i>
+                                        <span>Ana Clara Silva</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-regular fa-square text-slate-500 text-lg"></i>
+                                        <span>Pedro Santos (Faltou)</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-regular fa-square-check text-green-400 text-lg"></i>
+                                        <span><strong>+ Adicionar Visitante</strong></span>
+                                    </li>
+                                </ul>
+                                <button class="mt-4 w-full bg-amber-600 hover:bg-amber-700 py-2 rounded text-xs font-bold transition-colors">Enviar Relatório</button>
+                            </div>
+
+                            <div class="bg-white border border-slate-200 rounded-xl p-4">
+                                <h4 class="font-bold text-slate-800 text-sm mb-3">Termômetro da Rede</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between text-xs mb-1">
+                                            <span class="text-slate-500">Presença Global</span>
+                                            <span class="font-bold text-green-600">85%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 h-2 rounded-full"><div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs mb-1">
+                                            <span class="text-slate-500">Visitantes/Semana</span>
+                                            <span class="font-bold text-amber-600">12</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 h-2 rounded-full"><div class="bg-amber-500 h-2 rounded-full" style="width: 40%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 p-6 rounded-xl border border-amber-100 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl text-amber-800"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2">Encontre uma Célula (Mapa)</h3>
+                        <p class="text-sm text-slate-700 max-w-2xl">
+                            Integração nativa com Google Maps API. Visitantes entram no site da igreja, digitam o CEP e o sistema indica a célula mais próxima com dia, horário e link para WhatsApp do líder.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu('celulas'); 
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

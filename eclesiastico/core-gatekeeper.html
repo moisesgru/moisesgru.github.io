@@ -25,42 +25,48 @@
 
         <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
             <div class="mb-8">
-                <span class="text-red-500 font-bold tracking-widest text-xs uppercase">Raio-X Técnico</span>
+                <span class="text-indigo-500 font-bold tracking-widest text-xs uppercase">Regras de Negócio v4.0</span>
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">1. Core & Gatekeeper (SaaS)</h2>
-                <p class="text-slate-600 mb-6">Regras de controle de acesso, monetização e "Modo Graça".</p>
+                <p class="text-slate-600 mb-6">Controle de visibilidade da dívida e bloqueio progressivo.</p>
                 
                 <div class="mermaid">
-flowchart LR
-    Start(("Abrir App")) --> Auth{"Usuário Logado?"}
-    Auth -- Não --> Login["Tela Login"]
-    Auth -- Sim --> Fetch["Busca Status Assinatura"]
+flowchart TD
+    Start(("Vencimento Fatura")) --> CheckStatus{"Dias de Atraso?"}
     
-    Fetch --> Check{"Status?"}
+    CheckStatus -- "1 a 5 dias" --> Aviso["Aviso Discreto no Admin"]
+    CheckStatus -- "6 a 15 dias" --> BlockAdmin["Bloqueio Painel Admin"]
+    CheckStatus -- "+15 dias" --> BlockHeavy["Bloqueio Mídia/Uploads"]
+
+    BlockAdmin --> CheckConfig{"Admin ativou Rateio?"}
     
-    Check -- ATIVO --> Home["Dashboard Completo"]
-    Check -- BLOQUEADO --> GraceMode{"Modo Graça"}
+    CheckConfig -- SIM --> ShowCard["App Membro: Exibe Card 'Missão R$5'"]
+    CheckConfig -- NÃO --> HideCard["App Membro: Navegação Normal"]
     
-    GraceMode --> Feat1["Bíblia & Notas"]
-    GraceMode --> Feat2["Pedidos de Oração"]
-    
-    Feat2 --> WriteOnly["Envio com Sucesso"]
-    WriteOnly --> NotifyPastor["Notifica Pastor (Blur)"]
-    
-    GraceMode --x Fin["Financeiro (Bloqueado)"]
-    GraceMode --x Media["Mídia (Bloqueado)"]
+    ShowCard --> Doacao["Membro Doa"]
+    HideCard --> WaitAdmin["Aguarda Pagamento Admin"]
                 </div>
 
                 <div class="grid gap-6 mt-8">
-                    <div class="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-sm">
-                        <h3 class="font-bold text-slate-800">RN01 - O Gatekeeper Misericordioso (Modo Graça)</h3>
-                        <p class="text-sm text-slate-600 mt-2">Diferente de um bloqueio total (tela vermelha), o sistema adota um bloqueio parcial. Se <code class="bg-slate-100 px-1 rounded">subscriptions/{churchId}</code> retornar <strong>BLOCKED</strong>, o membro ainda acessa a <strong>Bíblia</strong> e envia <strong>Pedidos de Oração</strong>. Módulos administrativos (Financeiro, Agenda, Mídia) são desativados e exibem um alerta sugerindo contatar a liderança.</p>
-                        <div class="mt-4 bg-slate-50 p-3 rounded-lg text-xs font-mono text-slate-500">
-                            <strong>Objetivo:</strong> Usar a demanda espiritual do membro ("Preciso de oração") para gerar pressão positiva na liderança, sem punir a fé do usuário.
-                        </div>
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-slate-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN04 - Escalada de Bloqueio (Progressive Locking)</h3>
+                        <p class="text-sm text-slate-600 mt-2">O sistema não trava tudo de uma vez. A pressão aumenta com o tempo:</p>
+                        <ul class="mt-3 space-y-2 text-sm text-slate-600">
+                            <li><span class="font-bold text-yellow-600">Nível 1 (Aviso):</span> Apenas banners de alerta no painel administrativo. App 100% funcional.</li>
+                            <li><span class="font-bold text-orange-600">Nível 2 (Administrativo):</span> Bloqueio de relatórios e lançamentos financeiros. App do membro continua 100%.</li>
+                            <li><span class="font-bold text-red-600">Nível 3 (Infraestrutura):</span> Bloqueio de upload de vídeos/fotos (custo alto). Bíblia e Texto continuam ativos.</li>
+                        </ul>
                     </div>
-                    <div class="bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm">
-                        <h3 class="font-bold text-slate-800">RN02 - Estratégia Anti-Taxa</h3>
-                        <p class="text-sm text-slate-600 mt-2">O App Nativo (Android/iOS) nunca exibe botões de compra ou preços para não infringir regras das lojas. Pagamentos de assinatura ocorrem exclusivamente via Web (PWA/Desktop).</p>
+
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm">
+                        <h3 class="font-bold text-slate-800">RN05 - Soberania de Visibilidade</h3>
+                        <p class="text-sm text-slate-600 mt-2">
+                            A "Missão Tecnologia" (pedir ajuda aos membros) é uma <strong>escolha do Administrador</strong>.
+                            Existe um switch nas configurações: <code>Permitir rateio comunitário da assinatura?</code>.
+                            <br>
+                            Se <strong>OFF</strong>: O membro nunca vê que a igreja está devendo, mesmo que o sistema esteja no Nível 3 de bloqueio.
+                            <br>
+                            Se <strong>ON</strong>: O card de doação aparece automaticamente quando o Nível 2 é atingido.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missões & Campanhas | E-Clesiástico</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/tailwind.config.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#e0f2fe', edgeLabelBackground: '#ffffff', tertiaryColor: '#fff' } });
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+    
+    <div id="sidebar-placeholder"></div>
+
+    <main class="flex-1 overflow-y-auto relative scroll-smooth bg-white">
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-30 shadow-lg"><span class="font-bold text-lg">E-Clesiástico</span><button onclick="toggleMobileMenu()" class="text-slate-300"><i class="fa-solid fa-bars text-xl"></i></button></header>
+        
+        <div id="mobile-menu-placeholder"></div>
+
+        <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
+            <div class="mb-8">
+                <span class="text-cyan-600 font-bold tracking-widest text-xs uppercase">Especificação v4.0</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">5. Módulo Missões & Propósitos</h2>
+                <p class="text-slate-600 mb-6">Gestão de campanhas com metas específicas, roteamento inteligente de doações e flexibilidade litúrgica.</p>
+
+<div class="mermaid">
+flowchart LR
+    Admin["Admin (Liderança)"] --> Create["Cria Campanha"]
+    
+    subgraph Config ["Configuração"]
+        Create --> DefineMeta["Define Meta Financeira"]
+        Create --> DefineNome["Escolhe Nomenclatura"]
+        DefineNome -- "Ex: Reforma" --> T1["Campanha de Construção"]
+        DefineNome -- "Ex: App" --> T2["Missão Tecnologia"]
+    end
+
+    subgraph ExpMembro ["Experiência do Membro"]
+        T1 & T2 --> AppMembro["Card no App"]
+        AppMembro --> Donate["Membro Doa"]
+        Donate --> ProgressBar["Barra de Progresso Sobe"]
+    end
+
+    subgraph Routing ["Roteamento (Smart Routing)"]
+        ProgressBar --> CheckType{"É Missão App?"}
+        CheckType -- SIM --> Split{"Abate Dívida / Cashback"}
+        CheckType -- NÃO --> Direct{"Conta Igreja (100%)"}
+    end
+</div>
+                <div class="grid gap-8 mt-12">
+                    
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-cyan-100 rounded-lg text-cyan-600"><i class="fa-solid fa-tags"></i></div>
+                            <h3 class="font-bold text-slate-800 text-lg">Flexibilidade de Nomenclatura</h3>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-6">
+                            Cada igreja possui sua cultura de doação. O módulo permite renomear a "caixinha" de doação para se adaptar à liturgia local.
+                            O sistema trata tudo como <em>"Receita Vinculada a Projeto"</em>, mas o usuário vê o nome que lhe é familiar.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="p-4 border border-slate-100 rounded-lg bg-slate-50">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Administrativo</span>
+                                <h4 class="font-bold text-slate-700">Construção & Reforma</h4>
+                                <p class="text-xs text-slate-500 mt-1">Para obras físicas (telhado, pintura, novo templo).</p>
+                            </div>
+                            <div class="p-4 border border-slate-100 rounded-lg bg-slate-50">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Espiritual</span>
+                                <h4 class="font-bold text-slate-700">Oferta Alçada / Voto</h4>
+                                <p class="text-xs text-slate-500 mt-1">Doações sacrificiais ou propósitos específicos de fé.</p>
+                            </div>
+                            <div class="p-4 border border-slate-100 rounded-lg bg-slate-50">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Externo</span>
+                                <h4 class="font-bold text-slate-700">Missões & Evangelismo</h4>
+                                <p class="text-xs text-slate-500 mt-1">Suporte a missionários, viagens ou cestas básicas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyan-50 p-6 rounded-xl border border-cyan-100 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl text-cyan-800"><i class="fa-solid fa-server"></i></div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2">A "Missão Tecnologia" (Smart Routing)</h3>
+                        <p class="text-sm text-slate-700 max-w-2xl mb-4">
+                            Este é um tipo especial de campanha, gerida pelo sistema. Ela aparece automaticamente quando há pendências financeiras do software (se o Admin permitir).
+                        </p>
+                        <ul class="space-y-3 text-sm text-slate-700">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check-circle text-cyan-600 mt-1"></i>
+                                <span><strong>Objetivo:</strong> Manter o App no ar (Pagar o SaaS).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check-circle text-cyan-600 mt-1"></i>
+                                <span><strong>Transparência:</strong> O membro vê uma barra de progresso ("60% da meta atingida").</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check-circle text-cyan-600 mt-1"></i>
+                                <span><strong>Benefício Mútuo:</strong> Se a arrecadação superar o custo do software, o sistema redireciona o Pix excedente para a igreja.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/menu-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Precisamos atualizar o menu-component para reconhecer esta nova página
+            // Como paliativo visual, forçamos o active na mão se o script não tiver o ID
+            initMenu('missoes'); 
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diaconia | E-Clesiástico</title>
+    <title>Diaconia & Púlpito | E-Clesiástico</title>
     <link rel="stylesheet" href="assets/css/global.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,25 +25,54 @@
 
         <div class="p-6 lg:p-12 max-w-6xl mx-auto pb-24">
             <div class="mb-8">
-                <span class="text-purple-600 font-bold tracking-widest text-xs uppercase">Especificação v3.0</span>
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">3. Fluxo de Diaconia Real-time</h2>
-                
-                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100 mb-8">
-                    <h3 class="font-bold text-purple-900 mb-2">O Problema</h3>
-                    <p class="text-sm text-purple-800">Papéis com nomes de visitantes demoram a chegar ao púlpito ou se perdem.</p>
-                    <h3 class="font-bold text-purple-900 mt-4 mb-2">A Solução</h3>
-                    <p class="text-sm text-purple-800">O membro cadastra o visitante no app. Um tablet no púlpito escuta o banco de dados e exibe o nome instantaneamente.</p>
-                </div>
+                <span class="text-purple-600 font-bold tracking-widest text-xs uppercase">Especificação v3.2</span>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">3. Diaconia & Púlpito Inteligente</h2>
+                <p class="text-slate-600 mb-6">Central de comando litúrgico: Visitantes, Oração e Avisos da Mesa.</p>
 
                 <div class="mermaid">
 sequenceDiagram
-    participant Membro
-    participant Firebase
-    participant Diaconia
+    participant Porta as Recepção
+    participant Mesa as Diaconia (Mesa de Som/Apoio)
+    participant Backend
+    participant Pulpito as Tablet do Pastor
 
-    Membro->>Firebase: Salva 'Mario da Silva'
-    Firebase-->>Diaconia: Push Real-time (onSnapshot)
-    Diaconia->>Diaconia: Tela Pisca com Novo Nome
+    Note right of Pulpito: O Pastor nunca é interrompido (Modo Silencioso)
+
+    par Fluxo 1: Visitantes
+        Porta->>Backend: Novo Visitante
+        Backend->>Pulpito: Adiciona na Lista (Feed Lateral)
+    and Fluxo 2: Liturgia
+        Membro->>Backend: Pedido de Oração
+        Backend->>Pulpito: Adiciona na Checklist de Leitura
+    and Fluxo 3: O Bilhete Digital (NOVO)
+        Mesa->>Backend: Envia Aviso ("Carro atrapalhando")
+        Backend->>Pulpito: Exibe TOAST no Rodapé (5s)
+    end
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-orange-500"></i> Recepção
+                        </h3>
+                        <p class="text-sm text-slate-600">Alerta de chegada de visitantes para as boas-vindas.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-purple-600"></i> Checklist Pastoral
+                        </h3>
+                        <p class="text-sm text-slate-600">Lista organizada de pedidos de oração para leitura no altar.</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-note-sticky text-yellow-500"></i> O Bilhete Digital
+                        </h3>
+                        <p class="text-sm text-slate-600">
+                            Mensagens urgentes da diaconia (carro, tempo, avisos esquecidos) aparecem de forma discreta no rodapé da tela do pastor.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
