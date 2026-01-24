@@ -11,18 +11,18 @@ const menuItems = [
             { id: "tour", label: "Tour Interativo", icon: "fa-laptop-code", link: "tour.html" }
         ]
     },
-    {
+	{
         section: "Técnico",
         items: [
             { id: "core", label: "Core & Gatekeeper", icon: "fa-microchip", link: "core-gatekeeper.html" },
-            // NOVO: Membros (Base de tudo)
             { id: "membros", label: "Membros & Secretaria", icon: "fa-address-book", link: "membros.html" }, 
-            { id: "financeiro", label: "Financeiro (v2.1)", icon: "fa-hand-holding-dollar", link: "financeiro.html" },
-            { id: "diaconia", label: "Diaconia & Púlpito", icon: "fa-users", link: "diaconia.html" }, // Atualizei o label para refletir a mudança v3.2
+            // NOVO: Item exclusivo para Dízimos e Ofertas
+            { id: "contribuir", label: "Dízimos & Ofertas", icon: "fa-hand-holding-heart", link: "contribuir.html" },
+            { id: "financeiro", label: "Gestão Financeira (Adm)", icon: "fa-chart-line", link: "financeiro.html" },
+            { id: "diaconia", label: "Diaconia & Púlpito", icon: "fa-users", link: "diaconia.html" },
             { id: "oracao", label: "Oração (v1.0)", icon: "fa-hands-praying", link: "oracao.html" },
-            // NOVO: Missões
             { id: "missoes", label: "Missões & Propósitos", icon: "fa-bullseye", link: "missoes.html" }, 
-	    { id: "celulas", label: "Células & Discipulado", icon: "fa-network-wired", link: "celulas.html" }
+            { id: "celulas", label: "Células & Discipulado", icon: "fa-network-wired", link: "celulas.html" }
         ]
     },
     {
